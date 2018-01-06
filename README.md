@@ -45,5 +45,5 @@
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
         </dependency>
-2、然后建库建表，建两个非常简单的表user和log，user只有id、name、age（弄表的时候没有弄密码，后来写老套路的系统登录注册的时候，发现没有密码，就把age当密码来用，哈哈，不走常规路），log是为了用aop切点写日志（每个系统肯定都少不了日志的），也是只有id、logdate、content；简单应付了事，说明一下问题就行。象征性的提供一下脚本<a href="spring.sql">
+2、然后建库建表，建两个非常简单的表user和log，user只有id、name、age（弄表的时候没有弄密码，后来写老套路的系统登录注册的时候，发现没有密码，就把age当密码来用，哈哈，不走常规路），log是为了用aop切点写日志（每个系统肯定都少不了日志的），也是只有id、logdate、content；简单应付了事，说明一下问题就行。象征性的提供一下<a href="spring.sql">脚本</a>
 
