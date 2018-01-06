@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+ <!-- <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>-->
+ <script src="../jquery.min.js"></script>  <!-- 这种方法不能引入本地静态资源文件 -->
+<head>
+<meta charset="UTF-8" />
+<title>Title</title>
+</head>
+<script type="text/javascript">
+
+function isexist(){
+	alert("222");
+	$.ajax({
+	    url:'/hello',
+	    type:'POST', //GET
+	    async:true,  //或false,是否异步
+	    data:{
+	       // name:'yang',age:25
+	    },
+	    timeout:5000,    //超时时间
+	    dataType:'json',    //返回的数据格式：json/xml/html/script/jsonp/text
+	    beforeSend:function(xhr){
+	        console.log(xhr)
+	        console.log('发送前')
+	    },
+	    success:function(data,textStatus,jqXHR){
+	        console.log(data)
+	        console.log(textStatus)
+	        console.log(jqXHR)
+	    },
+	    error:function(xhr,textStatus){
+	        console.log('错误')
+	        console.log(xhr)
+	        console.log(textStatus)
+	    },
+	    complete:function(){
+	        console.log('结束')
+	    }
+	})
+}
+</script>
+<body>
+	<h1>Hello:</h1>
+	<h2>
+		<span th:text="${name1}"></span>
+	</h2>
+	<h2>
+		<span th:text="${bookTitle1}"></span>
+	</h2>
+	<form role="form" method="POST"  th:action="@{/registerSave}"
+		th:object="${user}" >
+		Name
+		<input type="text" class="form-control" id="username" th:field="*{name}" onblur="isexist()" />
+		Age
+		<input type="text" class="form-control" id="age"  th:field="*{age}"	/>
+
+		<button type="submit" class="btn btn-default">保存</button>
+		 </form>
+</body>
+</html>
