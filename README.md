@@ -46,8 +46,19 @@
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
         </dependency>
+
 2、然后建库建表，建两个非常简单的表user和log，user只有id、name、age（弄表的时候没有弄密码，后来写老套路的系统登录注册的时候，发现没有密码，就把age当密码来用，哈哈，不走常规路），log是为了用aop切点写日志（每个系统肯定都少不了日志的），也是只有id、logdate、content；简单应付了事，说明一下问题就行。象征性的提供一下<a href="spring.sql">脚本</a>。
 
 3、表建好当然需要mapper以及entity，dao，service等文件了。首先在properties中配置连接数据库信息，<img src="readme引用图片/properties中配置数据库信息.png">,接下来是不是打算写mapper以及java文件了，不要急。。。。。。，很多人都会用一点小工具反向生成代码，这里介绍一下eclipse的插件mybatis-generator，根据已有的表反向生成mapper以及entity和dao的，当然是用mvn的插件更好；怎么在eclipse装mybatis-generator就不多说了，利用插件然后在src/main/resources/generator新建一个generatorConfig.xml文件，新建方法如图<img src="readme引用图片/mybatis generator.png">,配置文件内容<a href="src/main/resources/generator/generatorConfig.xml"> generatorConfig.xml</a>;
+
 4、开始放大招，<img src="readme引用图片/运行mybatis generator生成代码.png">,然后神奇的发现代码都已经有了<img src="readme引用图片/插件生成的代码结构.png">;
-5、代码已经完成，不用自己手写有没有很爽。然后测试是否能够插入，在controller中写一个测试方法，<img src="readme引用图片/testInsert.png">,这里没有setid，因为表的id设置为主键，自动增长，运行启动类，这里有个小坑，如果没记错的话，在网页生成的代码框架，启动类在一个包中，如果controller在另一个包中，那么启动类需加上@ComponentScan("com.lz.controller")注解，我是把启动类从包中拉出来，放到跟controller包同级<img src="readme引用图片/启动类位置说明.png">;运行后，浏览器访问http://localhost:8080/insert  然后在表中查看是不是已经插入一条数据了，
+
+5、代码已经完成，不用自己手写有没有很爽。然后测试是否能够插入，在controller中写一个测试方法，<img src="readme引用图片/testInsert.png">,这里没有setid，因为表的id设置为主键，自动增长，运行启动类，这里有两个小坑，如果没记错的话，在网页生成的代码框架，启动类在一个包中，如果controller在另一个包中，那么启动类需加上@ComponentScan("com.lz.controller")注解，我是把启动类从包中拉出来，放到跟controller包同级<img src="readme引用图片/启动类位置说明.png">;另一个坑就是userMapper.xml是在mapper包中的，这样的话貌似不能自动扫描到这个文件，properties中配置了mybatis.mapper-locations=classpath:*.xml，所以要把这个 .xml文件拖到src/main/resources目录下就可以了，运行后，浏览器访问http://localhost:8080/insert  然后在表中查看是不是已经插入一条数据了；
+
+6、在welcome.html加两个超链接
+
+    <a href="/toregister" class="href">注册</a>
+    <!-- target="_blank" -->
+    <a href="/tologin" class="href">登录</a>
+
+这里超链接也是访问controller
