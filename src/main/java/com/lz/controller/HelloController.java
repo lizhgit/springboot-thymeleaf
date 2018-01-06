@@ -19,10 +19,10 @@ import com.lz.util.MyUtils;
 
 @Controller
 public class HelloController {
-	@Value("${userName}") // 从properties中取值
+	@Value("${userName}")
 	private String name;
 
-	@Value("${bookTitle}")
+	@Value("${bookTitle}") // 从properties中取值
 	private String title;
 
 	@Resource
@@ -34,6 +34,8 @@ public class HelloController {
 	@Autowired
 	private HttpServletRequest request;
 
+	
+	
 	@RequestMapping("/")
 	public String index(ModelMap map) {
 		// 加入一个属性，用来在模板中读取
@@ -46,7 +48,7 @@ public class HelloController {
 
 	@RequestMapping("/hello")
 	public String hello() {
-		return "hello world";
+		return "register";
 	}
 
 	@RequestMapping("/toregister")

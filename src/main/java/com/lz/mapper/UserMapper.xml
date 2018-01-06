@@ -30,13 +30,6 @@
     from user
     where id = #{id,jdbcType=INTEGER}
   </select>
-  <select id="selectByName" parameterType="java.lang.String" resultMap="BaseResultMap">
-   
-    select 
-    <include refid="Base_Column_List" />
-    from user
-    where name = #{name,jdbcType=VARCHAR} 
-  </select>
   <select id="selectByNamePwd" parameterType="com.lz.entity.User" resultMap="BaseResultMap">
   
     select 

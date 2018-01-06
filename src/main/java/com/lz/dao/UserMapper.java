@@ -36,6 +36,7 @@ public interface UserMapper {
      */
     User selectByPrimaryKey(Integer id);
     User selectByNamePwd(User user);
+    List<User> selectByName(String name);
     List<User> selectAll();
 
     /**

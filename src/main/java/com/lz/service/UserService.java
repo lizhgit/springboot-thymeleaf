@@ -21,5 +21,7 @@ public class UserService {
 	public List<User> selectAll(){
 		return userMapper.selectAll();
 	}
-	
+	public List<User> selectByName(String name){
+		return userMapper.selectByName(name);
+	}
 }

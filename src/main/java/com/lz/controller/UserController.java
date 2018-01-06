@@ -1,6 +1,8 @@
 package com.lz.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -11,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.lz.entity.Log;
 import com.lz.entity.User;
@@ -49,16 +52,21 @@ public class UserController {
 		}
 		return "welcome";
 	}
+
 	@RequestMapping(value = "/isexist", method = RequestMethod.POST)
-	public String isexist(User user, Model model) {
-		User isuser = userService.selectByNamePwd(user);
-		if (isuser != null) {
-			logService.insertSelective(new Log(MyUtils.getClientIpAddress(request) + user.getName() + "账号,成功登录"));
-			model.addAttribute("message", "登录成功");
-		} else {
-			model.addAttribute("message", "登录失败");
+	@ResponseBody // 此注解不能省略 否则ajax无法接受返回值
+	public Map<String, Object> isexist(String name) {
+
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		List<User> userList = userService.selectByName(name);
+		if (userList.size()>0) {
+			
+			resultMap.put("result", "isexist");
+		}else {
+			
+			resultMap.put("result", "notexist");
 		}
-		return "welcome";
+		return resultMap;
 	}
 
 	@RequestMapping(value = "/list")

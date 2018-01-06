@@ -61,4 +61,6 @@
     <!-- target="_blank" -->
     <a href="/tologin" class="href">登录</a>
 
-这里超链接也是访问controller
+这里超链接也是访问controller，先实现注册功能。
+
+7、注册界面<img src="readme引用图片/注册界面.png">,使用一个${user}获取一个user对象，并且*{name},*{age}获取user对应的属性，如果想在界面上使用user对象，则需要在跳转到register.html的controller中传递一个user对象<img src="readme引用图片/跳转到注册界面.png">,然后就是一些细节处理，<img src="readme引用图片/ajax验证name是否存在.png">,访问/isexist   controller中的方法，查询数据库输入的名字是否存在，<img src="readme引用图片/isexist.png">,这里参数是String类型，所以在UserMapper.xml自己定义一个根据那么查找的sql<img src="readme引用图片/byname查找的sql.png">,id的值唯一，且对应dao层的方法。另外验证name和age不能为空，有一个为空的话不能提交表单<img src="readme引用图片/name和age是否为空.png">。 通过这个th:action="@{/registerSave}" 提交到controller中，<img src="readme引用图片/registerSave.png">,参数user接受界面传过来的user对象，model往界面传值。
