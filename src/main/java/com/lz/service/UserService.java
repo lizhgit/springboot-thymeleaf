@@ -2,6 +2,8 @@ package com.lz.service;
 
 import java.util.List;
 
+import javax.jws.soap.SOAPBinding.Use;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,5 +25,8 @@ public class UserService {
 	}
 	public List<User> selectByName(String name){
 		return userMapper.selectByName(name);
+	}
+	public User selectByPrimaryKey(int id) {
+		return userMapper.selectByPrimaryKey(id);
 	}
 }

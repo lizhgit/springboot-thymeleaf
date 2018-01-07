@@ -48,7 +48,7 @@
    
     select 
     <include refid="Base_Column_List" />
-    from user
+    from user order by id
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     <!--

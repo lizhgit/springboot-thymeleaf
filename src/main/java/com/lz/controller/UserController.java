@@ -47,12 +47,31 @@ public class UserController {
 		if (isuser != null) {
 			logService.insertSelective(new Log(MyUtils.getClientIpAddress(request) + user.getName() + "账号,成功登录"));
 			model.addAttribute("message", "登录成功");
+			request.getSession().setAttribute("userSession", user);
 		} else {
 			model.addAttribute("message", "登录失败");
 		}
 		return "welcome";
 	}
 
+	@RequestMapping(value = "/logout")
+	public String logout(Model model) {
+		User user = (User) request.getSession().getAttribute("userSession");
+		request.getSession().removeAttribute("userSession");
+		if (request.getSession().getAttribute("userSession") == null) {
+			if (user ==null) {
+				
+				model.addAttribute("message", "退出成功");
+			}else {
+				
+				model.addAttribute("message", user.getName()+"退出成功");
+				logService.insertSelective(new Log(MyUtils.getClientIpAddress(request) + user.getName()+ "账号,退出"));
+			}
+		} else {
+			model.addAttribute("message", user.getName()+"退出失败");
+		}
+		return "welcome";
+	}
 	@RequestMapping(value = "/isexist", method = RequestMethod.POST)
 	@ResponseBody // 此注解不能省略 否则ajax无法接受返回值
 	public Map<String, Object> isexist(String name) {
@@ -76,6 +95,12 @@ public class UserController {
 		model.addAttribute("message", "登录成功");
 		model.addAttribute("isList", "true");
 		return "welcome";
+	}
+	@RequestMapping(value = "/updateUser")
+	public String updateUser(String id,Model model) {
+		User user = userService.selectByPrimaryKey(Integer.parseInt(id));
+		model.addAttribute("userByid", user);
+		return "register";
 	}
 
 }

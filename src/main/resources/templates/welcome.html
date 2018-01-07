@@ -1,9 +1,16 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+<script src="../jquery.min.js"></script>
+
 <head>
 <meta charset="UTF-8" />
 <title>Title</title>
 </head>
+<script type="text/javascript">
+function updateUser(dat){
+	alert(dat);
+}
+</script>
 <body>
 	<h1>Hello:</h1>
 	<h2>
@@ -15,46 +22,52 @@
 	<a href="/toregister" class="href">注册</a>
 	<!-- target="_blank" -->
 	<a href="/tologin" class="href">登录</a>
+	<span th:if="${session.userSession} != null"> <a href="/logout"
+		class="href">退出</a>
+	</span>
 	<h2>
+		<span th:if="${session.userSession} != null">
+			<span th:text="${session.userSession.name}"></span>
+		</span>
 		<span th:text="${message}"></span>
 	</h2>
-	<span th:if="${message} == '登录成功'"> <a href="/list" class="href" >查看列表</a>
-	<span th:if="${isList} == 'true'">
-		<ol>
-			<li>List循环：
-				<table border="1">
-					<tr>
-						<th>操作</th>
-						<th>id</th>
-						<th>name</th>
-						<th>age</th>
-						<th>状态变量：index</th>
-						<th>状态变量：count</th>
-						<th>状态变量：size</th>
-						<th>状态变量：current.name</th>
-						<th>状态变量：even</th>
-						<th>状态变量：odd</th>
-						<th>状态变量：first</th>
-						<th>状态变量：last</th>
-					</tr>
-					<tr th:each="user,userStat : ${userList}">
-						<td><a href="#">修改</a><a href="#">删除</a></td>
-						<td th:text="${user.id}">Onions</td>
-						<td th:text="${user.name}">test@test.com.cn</td>
-						<td th:text="${user.age}">yes</td>
-						<th th:text="${userStat.index}">状态变量：index</th>
-						<th th:text="${userStat.count}">状态变量：count</th>
-						<th th:text="${userStat.size}">状态变量：size</th>
-						<th th:text="${userStat.current.name}">状态变量：current</th>
-						<th th:text="${userStat.even}">状态变量：even****</th>
-						<th th:text="${userStat.odd}">状态变量：odd</th>
-						<th th:text="${userStat.first}">状态变量：first</th>
-						<th th:text="${userStat.last}">状态变量：last</th>
-					</tr>
-				</table>
-			</li>
-		
-		</ol>
+	<span th:if="${session.userSession} != null"> <a href="/list"
+		class="href">查看列表</a> <span th:if="${isList} == 'true'">
+			<ol>
+				<li>List循环：
+					<table border="1">
+						<tr>
+							<th>操作</th>
+							<th>id</th>
+							<th>name</th>
+							<th>age</th>
+							<th>状态变量：index</th>
+							<th>状态变量：count</th>
+							<th>状态变量：size</th>
+							<th>状态变量：current.name</th>
+							<th>状态变量：even</th>
+							<th>状态变量：odd</th>
+							<th>状态变量：first</th>
+							<th>状态变量：last</th>
+						</tr>
+						<tr th:each="user,userStat : ${userList}">
+							<td><a href="#" onclick="updateUser()">修改${user.id}</a><a href="/updateUser?id=123">删除</a></td>
+							<td th:text="${user.id}" >Onions</td>
+							<td th:text="${user.name}">test@test.com.cn</td>
+							<td th:text="${user.age}">yes</td>
+							<th th:text="${userStat.index}">状态变量：index</th>
+							<th th:text="${userStat.count}">状态变量：count</th>
+							<th th:text="${userStat.size}">状态变量：size</th>
+							<th th:text="${userStat.current.name}">状态变量：current</th>
+							<th th:text="${userStat.even}">状态变量：even****</th>
+							<th th:text="${userStat.odd}">状态变量：odd</th>
+							<th th:text="${userStat.first}">状态变量：first</th>
+							<th th:text="${userStat.last}">状态变量：last</th>
+						</tr>
+					</table>
+				</li>
+
+			</ol>
 
 	</span>
 	</span>

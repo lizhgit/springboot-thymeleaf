@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<!-- <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>-->
+<script src="../jquery.min.js"></script>
+<!-- 不用要static ,因为默认的static就是防止静态文件的路径-->
+<head>
+<meta charset="UTF-8" />
+<title>Title</title>
+</head>
+<script type="text/javascript">
+	function isexist() {
+		var name = $("#username").val();
+		//	alert(name);
+		$.ajax({
+			url : '/isexist',
+			type : 'POST', //GET
+			async : true, //或false,是否异步
+			data : {
+				name : name
+			},
+			timeout : 5000, //超时时间
+			dataType : 'json', //返回的数据格式：json/xml/html/script/jsonp/text
+			beforeSend : function(xhr) {
+				//   alert(xhr);
+				//   alert('发送前');
+			},
+			success : function(data) {
+				if (data.result == "isexist") {
+					alert("名字已存在");
+					$("#username").val("");
+				}
+				//  alert(data.result);
+				//   alert(textStatus);
+				//   alert(jqXHR);
+			},
+			error : function(xhr, textStatus) {
+				alert('错误');
+				//   alert(xhr);
+				//   alert(textStatus);
+			},
+			complete : function() {
+				//  alert('结束');
+			}
+		})
+	}
+	function vali(){
+		if($("#username").val()==""||$("#age").val()==""){
+			alert("name和age不能为空");
+			return false;
+		}else{
+			$("#form").submit();
+		}
+	}
+</script>
+<body>
+	<h1>Hello:</h1>
+	<h2>
+		<span th:text="${name1}"></span>
+	</h2>
+	<h2>
+		<span th:text="${bookTitle1}"></span>
+	</h2>
+	<form role="form" method="POST" th:action="@{/updateSave}" id="form"
+		th:object="${user}">
+		Name <input type="text" class="form-control" id="username"
+			th:field="*{name}" onblur="isexist()" placeholder="${userByid.name}" /> Age <input type="text"
+			class="form-control" id="age" th:field="*{age}" />
+
+		<button type="button" class="btn btn-default" onclick="vali();return true;">保存</button>
+	</form>
+</body>
+</html>
