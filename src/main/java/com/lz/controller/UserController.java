@@ -100,7 +100,46 @@ public class UserController {
 	public String updateUser(String id,Model model) {
 		User user = userService.selectByPrimaryKey(Integer.parseInt(id));
 		model.addAttribute("userByid", user);
-		return "register";
+		return "update";
+	}
+	
+	@RequestMapping(value = "/updateSave", method = RequestMethod.POST)
+	public String updateSave(User userByid, Model model) {
+		/*查询更改前的用户信息，进行写日志*/
+		User userOld = userService.selectByPrimaryKey(userByid.getId());
+	   /*查询登录用户的信息*/
+		User userSession = (User) request.getSession().getAttribute("userSession");
+		if (userSession != null) {
+			int insertCount = userService.updateByPrimaryKeySelective(userByid);
+			logService.insertSelective(new Log(userSession.getName()+"在"+MyUtils.getClientIpAddress(request) + ":更新" + userOld.getName()+"  " +userOld.getAge()+ "账号为"+userByid.getName()+" "+userByid.getAge()));
+			if (insertCount > 0) {
+				model.addAttribute("message", "修改成功");
+			}
+			
+		}else {
+			
+			model.addAttribute("message", "用户信息丢失");
+		}
+		return "welcome";
+	}
+	@RequestMapping(value = "/deleteUser")
+	public String deleteUser(User userByid, Model model) {
+		/*查询更改前的用户信息，进行写日志*/
+		User userOld = userService.selectByPrimaryKey(userByid.getId());
+		/*查询登录用户的信息*/
+		User userSession = (User) request.getSession().getAttribute("userSession");
+		if (userSession != null) {
+			int insertCount = userService.deleteByPrimaryKey(userByid.getId());
+			logService.insertSelective(new Log(userSession.getName()+"在"+MyUtils.getClientIpAddress(request) + ":删除" + userOld.getName()+"  " +userOld.getAge()+ "账号信息"));
+			if (insertCount > 0) {
+				model.addAttribute("message", "删除成功");
+			}
+			
+		}else {
+			
+			model.addAttribute("message", "用户信息丢失");
+		}
+		return "welcome";
 	}
 
 }

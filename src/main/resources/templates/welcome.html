@@ -7,7 +7,7 @@
 <title>Title</title>
 </head>
 <script type="text/javascript">
-function updateUser(dat){
+function updateUser(this){
 	alert(dat);
 }
 </script>
@@ -51,8 +51,8 @@ function updateUser(dat){
 							<th>状态变量：last</th>
 						</tr>
 						<tr th:each="user,userStat : ${userList}">
-							<td><a href="#" onclick="updateUser()">修改${user.id}</a><a href="/updateUser?id=123">删除</a></td>
-							<td th:text="${user.id}" >Onions</td>
+							<td><a th:href="@{/updateUser(id=${user.id})}">修改</a><a th:href="@{/deleteUser(id=${user.id})}">删除</a></td>
+							<td th:text="${user.id}">Onions</td><!--  -->
 							<td th:text="${user.name}">test@test.com.cn</td>
 							<td th:text="${user.age}">yes</td>
 							<th th:text="${userStat.index}">状态变量：index</th>

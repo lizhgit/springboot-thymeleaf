@@ -71,4 +71,4 @@
 
 10、登录后，将user存到session中，在界面 <span th:text="${session.userSession.name}"></span> 获取，判断是否登录，然后展示功能。
 
-
+11、修改删除的超链接传参跟jsp不一样，<img src="readme引用图片/超链接使用方法.png">,更新界面需要隐藏<img src="readme引用图片/更新页面隐藏一个id.png">

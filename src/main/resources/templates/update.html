@@ -61,9 +61,10 @@
 		<span th:text="${bookTitle1}"></span>
 	</h2>
 	<form role="form" method="POST" th:action="@{/updateSave}" id="form"
-		th:object="${user}">
+		th:object="${userByid}">
+	 <input id="id" type="hidden" th:field="*{id}" /> <!-- type="hidden" -->
 		Name <input type="text" class="form-control" id="username"
-			th:field="*{name}" onblur="isexist()" placeholder="${userByid.name}" /> Age <input type="text"
+			th:field="*{name}" onblur="isexist()" th:placeholder="${userByid.name}" /> Age <input type="text"
 			class="form-control" id="age" th:field="*{age}" />
 
 		<button type="button" class="btn btn-default" onclick="vali();return true;">保存</button>

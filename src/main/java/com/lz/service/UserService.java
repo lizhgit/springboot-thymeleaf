@@ -29,4 +29,10 @@ public class UserService {
 	public User selectByPrimaryKey(int id) {
 		return userMapper.selectByPrimaryKey(id);
 	}
+	public int updateByPrimaryKeySelective(User user) {
+		return userMapper.updateByPrimaryKeySelective(user);
+	}
+	public int deleteByPrimaryKey(int id) {
+		return userMapper.deleteByPrimaryKey(id);
+	}
 }
