@@ -38,11 +38,18 @@ public class HelloController {
 	
 	@RequestMapping("/")
 	public String index(ModelMap map) {
+		String loseUser = (String) request.getSession().getAttribute("loseUser");
+		if (null != loseUser) {
+			map.addAttribute("message", loseUser);
+		}
+		request.getSession().removeAttribute("loseUser");
 		// 加入一个属性，用来在模板中读取
 		map.addAttribute("name1", name);// name是上边定义的string变量，name1
 										// 传给界面用${name1}获取
 		map.addAttribute("bookTitle1", title);
 		// return模板文件的名称，对应src/main/resources/templates/welcome.html
+		
+		
 		return "welcome";
 	}
 
